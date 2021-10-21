@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Java Chat</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/main.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="container text-center">
+        <h1 style="font-size: 2.5rem; font-weight: 500">Добро пожаловать!</h1>
+        <h3 style="font-weight: bold"><a th:href="@{/signup}">Регистрация</a></h3>
+        <h3 style="font-weight: bold"><a th:href="@{/login}">Вход</a></h3>
+    </div>
+
+</body>
+</html>
