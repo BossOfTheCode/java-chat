@@ -5,3 +5,5 @@
 > Пользователи и сообщения сохраняются в БД PostgreSQL, связь с которой реализована при помощи Hibernate ORM.
 > 
 > В качестве шаблонизатора страниц используется Thymeleaf.
+> 
+![image](https://user-images.githubusercontent.com/79054264/144068045-0b61df96-e5db-4584-beb3-22f9930cf337.png)
