@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель администратора</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/main.css}" rel="stylesheet"/>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div class="container text-center">
+    <form th:action="@{/logout}" th:method="post">
+        <br>
+        <div class="form-group">
+            <button type="submit" class="accent username-submit">Выход</button>
+        </div>
+    </form>
+</div>
+<div>
+    <h2 style="font-weight: bold"><a th:href="@{/admin/users}">Список пользователей</a></h2>
+    <h2 style="font-weight: bold"><a th:href="@{/admin/messages}">Сообщения</a></h2>
+    <h2 style="font-weight: bold"><a th:href="@{/admin/banned}">Заблокированные пользователи</a></h2>
+</div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заблокированные пользователи</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/main.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container text-center">
+    <form th:action="@{/admin}" th:method="GET">
+        <br>
+        <div class="form-group">
+            <button type="submit" class="accent username-submit">Вернуться на панель администратора</button>
+        </div>
+    </form>
+</div>
+<div>
+    <h1>Список заблокированных пользователей</h1>
+</div>
+<div id="table-wrapper">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID бана</th>
+            <th>Логин</th>
+            <th>Причина блокировки</th>
+            <th>Разблокировать</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ban: ${bannedUsers}">
+            <td th:text="${ban.getId()}"></td>
+            <td th:text="${ban.getUser().getLogin()}"></td>
+            <td th:text="${ban.getReason()}"></td>
+            <td><a th:href="@{'/admin/banned/unban/' + ${ban.getUser().getId()}}">Разблокировать</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

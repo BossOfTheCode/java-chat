@@ -3,15 +3,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Общий чат</title>
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
-    <link th:href="@{/main.css}" rel="stylesheet" />
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/main.css}" rel="stylesheet"/>
 </head>
 <body>
-
 <div id="username-page">
     <div class="username-page-container">
         <h1 class="title">Войдите</h1>
-        <form th:action="@{/chat}" th:method="GET"  id="usernameForm" name="usernameForm">
+        <form th:action="@{/chat}" th:method="GET" id="usernameForm" name="usernameForm">
             <input type="hidden" id="name" th:value="${name}"/>
             <div class="form-group">
                 <button type="submit" class="accent username-submit">Войти в чат</button>
@@ -19,33 +18,36 @@
         </form>
     </div>
 </div>
-
 <div id="chat-page" class="hidden">
     <div class="chat-container">
         <div class="chat-header">
             <div class="input-group clearfix">
-                <h2>Общий чат</h2>
+                <h2>Чат</h2>
                 <a th:href="@{/}">
-                <button type="button" class="primary">Покинуть чат</button>
+                    <button type="button" class="primary">Покинуть чат</button>
                 </a>
             </div>
         </div>
-        <div class="connecting">
-            Подключение
-        </div>
-        <ul id="messageArea">
-
-        </ul>
-        <form id="messageForm" name="messageForm" nameForm="messageForm">
+        <div class="connecting">Подключение</div>
+        <ul id="messageArea"></ul>
+        <form id="messageForm" name="messageForm">
             <div class="form-group">
                 <div class="input-group clearfix">
-                    <input type="text" id="message" placeholder="Введите сообщение..." autocomplete="off" class="form-control"/>
+                    <input type="text" id="message" placeholder="Введите сообщение..." autocomplete="off"
+                           class="form-control"/>
                     <button type="submit" class="primary">Отправить</button>
                 </div>
             </div>
         </form>
     </div>
+    <div class="users-container">
+        <div class="users-header">
+            <h2>Пользователи в чате</h2>
+        </div>
+        <ol id="usersOnlineArea"></ol>
+    </div>
 </div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/sockjs-client/sockjs.min.js}"></script>
 <script th:src="@{/webjars/stomp-websocket/stomp.min.js}"></script>
 <script th:src="@{/script.js}"></script>

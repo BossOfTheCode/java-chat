@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель администратора</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/main.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container text-center">
+    <form th:action="@{/admin/messages}" th:method="GET">
+        <br>
+        <div class="form-group">
+            <button type="submit" class="accent username-submit">Вернуться к сообщениям</button>
+        </div>
+    </form>
+</div>
+<div>
+    <h1>Сообщения</h1>
+</div>
+<div id="table-wrapper">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID сообщения</th>
+            <th>Отправитель</th>
+            <th>Текст</th>
+            <th>Дата отправления</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="message: ${messages}">
+            <td th:text="${message.getId()}"></td>
+            <td th:text="${message.getUser().getLogin()}"></td>
+            <td th:text="${message.getText()}"></td>
+            <td th:text="${message.getSendingTime()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

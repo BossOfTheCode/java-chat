@@ -1,25 +1,28 @@
 package spring.javachat.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import spring.javachat.models.entity.BannedUser;
+import spring.javachat.models.entity.Role;
 import spring.javachat.models.entity.User;
-import spring.javachat.models.service.CustomUserDetails;
+import spring.javachat.models.service.RoleService;
 import spring.javachat.models.service.UserService;
-
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
 
@@ -50,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String userLogin(Model model,
+    public String userLogin(User user, Model model,
                           @RequestParam(value = "error", required = false) String error,
                           @RequestParam(value = "logout", required = false) String logout) {
         model.addAttribute("error", error != null);
@@ -58,12 +61,48 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/chat")
-    public String showChat(Model model) {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((CustomUserDetails) principal).getUsername();
-        model.addAttribute("name", username);
-        return "chat";
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
     }
 
+    @GetMapping("/admin/users")
+    public String showUsersList(Model model){
+        List<User> users  = userService.findAll();
+        model.addAttribute("users", users);
+        return "users";
+    }
+
+
+    @GetMapping("/admin/users/edit/{id}")
+    public String showUserEditForm(@PathVariable("id") Integer Id, Model model){
+        User user = userService.findUserById(Id);
+        System.out.println(user);
+        List<Role> roles = roleService.findAll();
+        model.addAttribute("user", user);
+        model.addAttribute("listOfRoles", roles);
+        return "user-edit";
+    }
+
+    @PostMapping("/admin/users/edit")
+    public String saveEditedUser(User user){
+        userService.saveEditedUser(user);
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping("/admin/users/ban/{id}")
+    public String showUserBanForm(@PathVariable("id") Integer Id, Model model){
+        BannedUser bannedUser = new BannedUser();
+        User user = userService.findUserById(Id);
+        bannedUser.setUser(user);
+        model.addAttribute("user", user);
+        model.addAttribute("bannedUser", bannedUser);
+        return "user-ban";
+    }
+
+    @GetMapping("/admin/users/delete/{id}")
+    public String deleteUser(@PathVariable("id") Integer id){
+        userService.deleteUserById(id);
+        return "redirect:/admin/users";
+    }
 }

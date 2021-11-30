@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Общий чат</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/main.css}" rel="stylesheet"/>
+</head>
+<body>
+<h1>
+    <div style="color:darkred" th:if="${userBanned}" th:text="${userBanned}"></div>
+</h1>
+</body>
+</html>

@@ -17,11 +17,15 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    public void createMessage(Message message) {
+    public void saveMessage(Message message) {
         messageRepository.save(message);
     }
 
     public List<Message> findAll() {
         return messageRepository.findAll();
+    }
+
+    public List<Message> findMessagesByUserName(String userName) {
+        return messageRepository.findMessagesByUserName(userName);
     }
 }

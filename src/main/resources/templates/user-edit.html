@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель администратора</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/main.css}" rel="stylesheet"/>
+</head>
+<body>
+<form th:action="@{/admin/users/edit}" th:object="${user}" th:method="POST">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="hidden" th:field="*{login}"/>
+    <input type="hidden" th:field="*{password}"/>
+    <div class="m-3">
+        <div class="form-group row">
+            <div class="col-8">
+                <th:block th:each="role: ${listOfRoles}">
+                    <input type="checkbox" th:field="*{roles}"
+                           th:text="${role.name}" th:value="${role.id}" class="m-2"/>
+                </th:block>
+            </div>
+        </div>
+        <div>
+            <button type="submit" class="accent username-submit">Обновить</button>
+        </div>
+    </div>
+</form>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

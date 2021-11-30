@@ -140,6 +140,30 @@ button.accent {
     position: relative;
 }
 
+.users-container {
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+    margin-top: 30px;
+    height: calc(100% - 60px);
+    max-height: 740px;
+    position: relative;
+    left: 675px;
+    bottom: 770px;
+}
+
+#chat-page ol {
+    list-style-type: none;
+    background-color: #FFF;
+    margin: 0;
+    overflow: auto;
+    overflow-y: scroll;
+    padding: 0 20px 0px 20px;
+    height: calc(100% - 80px);
+}
+
 #chat-page ul {
     list-style-type: none;
     background-color: #FFF;
@@ -166,6 +190,12 @@ button.accent {
 }
 
 #chat-page .event-message {
+    width: 100%;
+    text-align: center;
+    clear: both;
+}
+
+#chat-page .user-online {
     width: 100%;
     text-align: center;
     clear: both;
@@ -223,15 +253,38 @@ button.accent {
 
 .chat-header {
     text-align: center;
-    padding: 15px;
+    padding: 20px;
     border-bottom: 1px solid #ececec;
 }
+
+
 
 .chat-header h2 {
     margin: 0;
     margin-right: auto;
     font-weight: 500;
 }
+
+.chat-header button {
+    float: left;
+    width: 150px;
+    height: 38px;
+    margin-left: 5px;
+}
+
+.users-header {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid #ececec;
+}
+
+.users-header h2 {
+    margin: 0;
+    margin-right: auto;
+    font-weight: 500;
+}
+
+
 
 .connecting {
     padding-top: 5px;
@@ -268,10 +321,6 @@ button.accent {
         height: calc(100% - 120px);
     }
 
-    .chat-header .button {
-        width: 65px;
-    }
-
     #messageForm .input-group button {
         width: 65px;
     }
@@ -280,9 +329,6 @@ button.accent {
         width: calc(100% - 70px);
     }
 
-    .chat-header {
-        padding: 10px;
-    }
 
     .connecting {
         top: 60px;
@@ -291,4 +337,13 @@ button.accent {
     .chat-header h2 {
         font-size: 1.1em;
     }
+}
+
+#table-wrapper {
+    height: 650px;
+    overflow:scroll;
+}
+#table-wrapper thead th {
+    position: sticky;
+    top: 0;
 }
