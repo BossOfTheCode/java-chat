@@ -13,6 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -23,6 +24,7 @@ public class User {
     @Column(unique = true, nullable = false, length = 20)
     private String login;
 
+    @JsonIgnore
     @NotEmpty(message = "Пароль не может быть пустым")
     @Size(min = 8, max = 60, message = "Пароль должен содержать не менее 8 и не более 60 символов")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=\\S+$).{8,}$", message = "Пароль может содержать только цифры и буквы латинского алфавита, а также обязательно должен включать одну цифру и одну заглавную букву")

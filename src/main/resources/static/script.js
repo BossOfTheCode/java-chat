@@ -37,12 +37,13 @@ function connect(event) {
 
 function onConnected() {
     stompClient.subscribe('/topic/public', onMessageReceived);
-
+    stompClient.subscribe('/topic/users', updateUsersOnline);
     // Сообщаем серверу имя подключившегося пользователя
     stompClient.send("/app/addUserToChat",
         {},
-        JSON.stringify({username: username, type: 'JOIN', sendingTime: new Date().toString().substring(4, 24)})
+        JSON.stringify({user: username, text: username + ' вошел(-ла) в чат!', sendingTime: new Date().toString().substring(4, 24), type: 'JOIN'})
     )
+    console.log(new Date().toString().substring(4, 24))
 
     connectingElement.classList.add('hidden');
 }
@@ -70,40 +71,37 @@ function sendMessage(event) {
     event.preventDefault();
 }
 
+function updateUsersOnline(payload) {
+    users = JSON.parse(payload.body);
+}
 
 function onMessageReceived(payload) {
-    let chatMessage = JSON.parse(payload.body);
-
-    console.log(chatMessage)
-
+    let message = JSON.parse(payload.body);
     let messageElement = document.createElement('li');
-
-    if(chatMessage.message.type === 'JOIN') {
+    if(message.type === 'JOIN') {
         messageElement.classList.add('event-message');
-        users = chatMessage.usersOnline;
-        chatMessage.message.text = chatMessage.message.user.login + ' вошел(-ла) в чат!';
-    } else if (chatMessage.message.type === 'LEAVE') {
-        users = chatMessage.usersOnline;
+        message.text = message.user.login + ' вошел(-ла) в чат!';
+    } else if (message.type === 'LEAVE') {
         messageElement.classList.add('event-message');
-        chatMessage.message.text = chatMessage.message.user.login + ' покинул(-а) чат!';
-        chatMessage.message.sendingTime = chatMessage.message.sendingTime.substring(0, 19)
+        message.text = message.user.login + ' покинул(-а) чат!';
+        message.sendingTime = message.sendingTime.substring(0, 19)
     } else {
         messageElement.classList.add('chat-message');
         let avatarElement = document.createElement('i');
-        let avatarText = document.createTextNode(chatMessage.message.user.login[0]);
+        let avatarText = document.createTextNode(message.user.login[0]);
         avatarElement.appendChild(avatarText);
-        avatarElement.style['background-color'] = getAvatarColor(chatMessage.message.user.login);
+        avatarElement.style['background-color'] = getAvatarColor(message.user.login);
 
         messageElement.appendChild(avatarElement);
 
         let usernameElement = document.createElement('span');
-        let usernameText = document.createTextNode(chatMessage.message.user.login);
+        let usernameText = document.createTextNode(message.user.login);
         usernameElement.appendChild(usernameText);
         messageElement.appendChild(usernameElement);
     }
 
     let textElement = document.createElement('p');
-    let messageText = document.createTextNode(chatMessage.message.sendingTime.replace('T', ' ') + ': ' + chatMessage.message.text);
+    let messageText = document.createTextNode(message.sendingTime.replace('T', ' ') + ': ' + message.text);
     textElement.appendChild(messageText);
 
     messageElement.appendChild(textElement);

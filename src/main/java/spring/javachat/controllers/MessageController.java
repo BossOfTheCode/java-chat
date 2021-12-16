@@ -22,7 +22,6 @@ public class MessageController {
         this.messageService = messageService;
     }
 
-
     @GetMapping("/admin/messages")
     public String showAllMessages(Model model){
         List<Message> messages  = messageService.findAll();

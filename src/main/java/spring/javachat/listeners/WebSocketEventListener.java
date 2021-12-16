@@ -9,7 +9,6 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
-import spring.javachat.controllers.ChatController;
 import spring.javachat.models.entity.Message;
 import spring.javachat.models.entity.User;
 import spring.javachat.models.service.MessageService;
@@ -29,7 +28,7 @@ public class WebSocketEventListener {
     private final SimpMessageSendingOperations messagingTemplate;
 
     @Autowired
-    public WebSocketEventListener(MessageService messageService, UserService userService, SimpMessageSendingOperations messagingTemplate) {
+    public WebSocketEventListener(MessageService messageService, SimpMessageSendingOperations messagingTemplate) {
         this.messageService = messageService;
         this.messagingTemplate = messagingTemplate;
     }
@@ -51,10 +50,10 @@ public class WebSocketEventListener {
             message.setText(message.getUser().getLogin() + " покинул(-а) чат!");
             message.setSendingTime(LocalDateTime.now().withNano(0));
             messageService.saveMessage(message);
-            List<String> usersOnline = UserService.getUsersOnline();
-            usersOnline.remove(user.getLogin());
-            ChatController.ChatMessage chatMessage = new ChatController.ChatMessage(message, usersOnline);
-            messagingTemplate.convertAndSend("/topic/public", chatMessage);
+            List<String> namesOfUsersOnline = UserService.getNamesOfUsersOnline();
+            namesOfUsersOnline.remove(user.getLogin());
+            messagingTemplate.convertAndSend("/topic/users", namesOfUsersOnline);
+            messagingTemplate.convertAndSend("/topic/public", message);
         }
     }
 }

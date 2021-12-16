@@ -34,7 +34,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public static List<String> getUsersOnline() { return namesOfUsersOnline; }
+    public static List<String> getNamesOfUsersOnline() { return namesOfUsersOnline; }
 
     public List<User> findAll() {
         return userRepository.findAll();

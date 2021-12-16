@@ -6,5 +6,4 @@ import spring.javachat.models.entity.Role;
 
 @Transactional
 public interface RoleRepository extends JpaRepository<Role, Integer> {
-
 }
